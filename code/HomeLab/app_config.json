@@ -1,0 +1,5 @@
+{
+  "streamingcommunity_url" : "StreamingCommunity.hiphop",
+  "discord_webhook" : "https://discord.com/api/webhooks/...",
+  "ESP32_integration": "False"
+}
