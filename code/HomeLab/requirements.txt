@@ -1,0 +1,6 @@
+requests
+flask
+pytubefix
+psutil
+gpiozero
+streamingcommunity-unofficialapi
