@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Api Tool</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+	<link rel="icon" type="image/png" href="{{ url_for('static',filename='icons/icon.png') }}"/>
+</head>
+<body>
+    <header style="background-color: #ffb700;">
+        <h1>API Tool</h1>
+    </header>
+	<ul>
+		<li><a href="/index">Home</a></li>
+		<li><a href="/music">Musica</a></li>
+    		<li><a class="active" href="#api_tool">Api Tool</a></li>
+		<li><a href="/film">Film Download</a></li>
+		<li><a href="/login">Cloud</a></li>
+	</ul>
+
+
+    <section class="card-setting">
+        <h1 style="font-size: 2.2rem;">📄 Api Tool 🔗</h1>
+        <form action="/send_request" method="post">
+            <div class="api-container">
+			    <textarea style="float:left; display:inline;" name="url" rows="1" cols="30" placeholder="https://..."></textarea>
+
+                <select style="float:left; display:inline;" name="type">
+                    <option value="get">GET</option>
+                    <option value="post">POST</option>
+                    <option value="put">PUT</option>
+                    <option value="patch">PATCH</option>
+                    <option value="delete">DELETE</option>
+                    <option value="option">OPTIONS</option>
+                    <option value="head">HEAD</option>
+                </select>
+            </div>
+            <h1 style="text-align: left; padding: 0px 30px;">Json</h1>
+            <textarea class="request-json-textarea" name="json" rows="1" cols="30" placeholder="{'key':'value'}"></textarea>
+
+            <h1 style="text-align: left; padding: 0px 30px;">Headers</h1>
+            <textarea class="request-header-textarea" name="headers" rows="1" cols="30" placeholder="{'key':'value'}"></textarea>
+            <br>
+			<button class="request-button" type="submit">Send request</button>
+		</form>
+    </section>
+
+
+    </body>
+</html>

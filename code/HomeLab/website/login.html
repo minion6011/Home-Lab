@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login Panel</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+	<link rel="icon" type="image/png" href="{{ url_for('static',filename='icons/icon.png') }}"/>
+</head>
+<body>
+	
+	<header style="background-color: #4361ee;">
+		<h1>Login Panel</h1>
+	</header>
+	<ul>
+		<li><a href="/index">Home</a></li>
+		<li><a href="/music">Musica</a></li>
+		<li><a href="/api_tool">Api Tool</a></li>
+		<li><a href="/film">Film Download</a></li>
+		<li><a class="active" href="#login">Cloud</a></li>
+	  </ul>
+
+	
+	<section class="card-music">
+		<p style="font-size: 2rem; font-weight: 600; margin: 1px">👤 Login 🗝️</p>
+		<form action="/user_panel" method="post">
+			<input type="hidden" name="path" value="None"/>
+			
+		        <h2 style="text-align: left;">User</h2>
+			<input type="text" class="input-text" name="user"></textarea>
+			
+		        <h2 style="text-align: left;">Password</h2>
+		        <input type="password" class="input-text" name="password"></textarea>
+			
+			<br>
+			{{ login_status }}
+			<br>
+			
+			<button class="login-button" type="submit">Login</button>
+		</form>
+	</section>
+
+
+</body>
+</html>

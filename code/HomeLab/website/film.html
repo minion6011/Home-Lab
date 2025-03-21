@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Film Finder</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static',filename='icons/icon.png') }}"/>
+</head>
+<body>
+    <header style="background-color: #630297;">
+        <h1>Film Finder</h1>
+    </header>
+	<ul>
+		<li><a href="/index">Home</a></li>
+		<li><a href="/music">Musica</a></li>
+    		<li><a href="/api_tool">Api Tool</a></li>
+        	<li><a class="active" href="#film">Film Download</a></li>
+		<li><a href="/login">Cloud</a></li>
+	</ul>
+
+
+    <section class="card-setting">
+        <h1>🎥 Find a Film 🎞️</h1> 
+        <form action="/film_search" method="post">
+            <div class="api-container">
+			    <textarea style="float:left; display:inline;" name="film_name" rows="1" cols="30" placeholder="Film Name..."></textarea>
+
+                <button class="search-button" type="submit">
+			<img height="22px" width="22px" src="{{ url_for('static',filename='icons/search.png') }}">
+		</button>
+            </div>
+
+
+		</form>
+    </section>
+
+
+    </body>
+</html>

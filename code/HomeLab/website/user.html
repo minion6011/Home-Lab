@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Cloud Panel</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+	<link rel="icon" type="image/png" href="{{ url_for('static',filename='icons/icon.png') }}"/>
+</head>
+<body>
+	<header style="background-color: #00b4d8;">
+		<h1>Cloud Panel</h1>
+	</header>
+	<ul>
+		<li><a href="/index">Home</a></li>
+		<li><a href="/music">Musica</a></li>
+		<li><a href="/api_tool">Api Tool</a></li>
+		<li><a href="/film">Film Download</a></li>
+		<li><a href="#user" style="background-color: #3a86ff;">Cloud Panel</a></li>
+		<li><a style="background-color: #c1121f" href="/login">Logout</a></li>
+	</ul>
+	
+	<div id="modal-loading" class="modal-loading">
+		<div class="modal-content-loading">
+			<h1>Loading...</h1>
+		</div>
+	</div>
+	
+	<section class="card-user">
+		<div class="user-title-container">
+			<p class="file-title">Benvenuto/a! {{ user_name }}</p>
+			<div class="file-second-container">
+				{% if not back_path == 'None' %}
+					<form action="/user_panel" method="POST">
+						<input type="hidden" name="user" value="{{ user_name }}"/> <input type="hidden" name="password" value="{{ auth }}"/> <input type="hidden" name="path" value="{{ home_path }}"/>
+						<button type="submit" class="home-file-button">
+							<img class="file-img-button" src="{{ url_for('static',filename='icons/home.png') }}">
+						</button>
+					</form>
+				
+					<form action="/user_panel" method="POST">
+						<input type="hidden" name="user" value="{{ user_name }}"/> <input type="hidden" name="password" value="{{ auth }}"/> <input type="hidden" name="path" value="{{ back_path }}"/>
+						<button type="submit" class="back-file-button">
+							<img class="file-img-button" src="{{ url_for('static',filename='icons/back.png') }}">
+						</button>
+					</form>
+				{% endif %}
+				
+				<form action="/add_folder" method="POST">
+					<input type="hidden" name="user" value="{{ user_name }}"/> <input type="hidden" name="password" value="{{ auth }}"/> <input type="hidden" name="path" value="{{ path }}"/>
+	
+					<button class="create-folder-button">
+						<img class="file-img-button" src="{{ url_for('static',filename='icons/plus.png') }}">
+					</button>
+				</form>
+				
+				<form action="/upload_file" method="POST" enctype="multipart/form-data">
+					<input type="hidden" name="user" value="{{ user_name }}"/> <input type="hidden" name="password" value="{{ auth }}"/> <input type="hidden" name="path" value="{{ path }}"/>
+					
+					<label for="file-input">
+					    <img class="upload-button" src="{{ url_for('static',filename='icons/upload.png') }}">
+					</label>
+					<input type="file" id="file-input" name="file" style="display: none;" onchange='document.getElementById("modal-loading").style.display = "block"; form.submit();' multiple></input>
+				</form>
+			</div>
+		</div>
+	</section>
+
+	<section class="card-user">
+		{% for file_name in files %}
+			{% if os.path.isfile(os.path.join(path, file_name)) %}
+				<div class="file-first-container">
+					{% if check_file(file_name) == 'image' %}
+						<p class="file-name-text">🖼️ {{ file_name }}</p>
+					{% elif check_file(file_name) == 'video' %}
+						<p class="file-name-text">📼 {{ file_name }}</p>
+					{% elif check_file(file_name) == 'audio' %}
+						<p class="file-name-text">🎵 {{ file_name }}</p>
+					{% else %}
+						<p class="file-name-text">📄 {{ file_name }}</p>
+					{% endif %}
+					<div class="file-second-container">
+
+						<button type="submit" class="rename-file-button">
+							<img class="file-img-button" src="{{ url_for('static',filename='icons/rename.png') }}">
+						</button>
+						<div class="modal-rename">
+							<div class="modal-rename-content">
+								<span class="close-rename">&times;</span>
+								<h2>Rinomina</h2>
+								<h2>{{ file_name }}</h2>
+								<form action="/rename_file" method="POST">
+									<input type="hidden" name="filename_old" value="{{ file_name }}"/> <input type="hidden" name="user" value="{{ user_name }}"/> <input type="hidden" name="password" value="{{ auth }}"/> <input type="hidden" name="path" value="{{ path }}"/>
+									<textarea name="filename_new" placeholder="{{ file_name }}">{{ file_name }}</textarea>
+									<br><br>
+									<button type="submit" class="rename-confirm-button">Invia</button>
+								</form>
+							</div>
+						</div>
+
+
+						<button type="submit" class="delete-file-button">
+							<img class="file-img-button" src="{{ url_for('static',filename='icons/trash.png') }}">
+						</button>
+
+						<div class="modal-delete">
+							<div class="modal-delete-content">
+								<span class="close-delete">&times;</span>
+								<h2>Vuoi eliminare il file?<br>"{{ file_name }}"</h2>
+								<div class="delete-buttons-container">
+									<form action="/delete_file" method="POST">
+										<input type="hidden" name="filename" value="{{ file_name }}"/> <input type="hidden" name="user" value="{{ user_name }}"/> <input type="hidden" name="password" value="{{ auth }}"/> <input type="hidden" name="path" value="{{ path }}"/>
+										<button type="submit" class="delete-confirm-button">Si</button>
+									</form>
+
+									<button class="close-delete-button">No</button>
+								</div>
+							</div>
+						</div>
+
+
+						<form action="/download_file" method="POST">
+							<input type="hidden" name="filename" value="{{ file_name }}"/> <input type="hidden" name="user" value="{{ user_name }}"/> <input type="hidden" name="password" value="{{ auth }}"/> <input type="hidden" name="path" value="{{ path }}"/>
+							<button type="submit" class="download-file-button">
+								<img class="file-img-button" src="{{ url_for('static',filename='icons/download.png') }}">
+							</button>
+						</form>
+						{% if check_file(file_name) == 'image' %}
+							<form class="imageForm">
+								<input type="hidden" name="filename" value="{{ file_name }}"/> <input type="hidden" name="user" value="{{ user_name }}"/> <input type="hidden" name="password" value="{{ auth }}"/> <input type="hidden" name="path" value="{{ path }}"/>
+								<button type="submit" class="openimage-file-button">
+									<img class="file-img-button" src="{{ url_for('static',filename='icons/eye.png') }}">
+								</button>	
+							</form>
+						{% endif %}
+						{% if check_file(file_name) == 'edit' %}
+							<form action="/editor_file" method="POST">
+								<input type="hidden" name="filename" value="{{ file_name }}"/> <input type="hidden" name="user" value="{{ user_name }}"/> <input type="hidden" name="password" value="{{ auth }}"/> <input type="hidden" name="path" value="{{ path }}"/>
+								<button type="submit" class="edit-file-button">
+									<img class="file-img-button" src="{{ url_for('static',filename='icons/pencil.png') }}">
+								</button>	
+							</form>
+						{% endif %}
+					</div>
+		
+				</div>
+				{% if check_file(file_name) == 'image' %}
+				<div>
+					<img class="ShowImage" style="max-width:100%; max-height:1200px; display: none; margin-top:5px; margin-bottom: 5px; margin-left: auto; margin-right: auto;">
+				</div>
+				{% endif %}
+			{% else %}
+				<div class="file-first-container">
+					<p class="file-name-text">📁 {{ file_name }}</p>
+					<div class="file-second-container">
+						
+						<button type="submit" class="rename-file-button">
+							<img class="file-img-button" src="{{ url_for('static',filename='icons/rename.png') }}">
+						</button>
+						<div class="modal-rename">
+							<div class="modal-rename-content">
+								<span class="close-rename">&times;</span>
+								<h2>Rinomina</h2>
+								<h2>{{ file_name }}</h2>
+								<form action="/rename_file" method="POST">
+									<input type="hidden" name="filename_old" value="{{ file_name }}"/> <input type="hidden" name="user" value="{{ user_name }}"/> <input type="hidden" name="password" value="{{ auth }}"/> <input type="hidden" name="path" value="{{ path }}"/>
+									<textarea name="filename_new" placeholder="{{ file_name }}">{{ file_name }}</textarea>
+									<br><br>
+									<button type="submit" class="rename-confirm-button">Invia</button>
+								</form>
+							</div>
+						</div>
+						
+
+						<button type="submit" class="delete-file-button">
+							<img class="file-img-button" src="{{ url_for('static',filename='icons/trash.png') }}">
+						</button>
+
+						<div class="modal-delete">
+							<div class="modal-delete-content">
+								<span class="close-delete">&times;</span>
+								<h2>Vuoi eliminare il file?<br>"{{ file_name }}"</h2>
+								<div class="delete-buttons-container">
+									<form action="/delete_file" method="POST">
+										<input type="hidden" name="filename" value="{{ file_name }}"/> <input type="hidden" name="user" value="{{ user_name }}"/> <input type="hidden" name="password" value="{{ auth }}"/> <input type="hidden" name="path" value="{{ path }}"/>
+										<button type="submit" class="delete-confirm-button">Si</button>
+									</form>
+
+									<button class="close-delete-button">No</button>
+								</div>
+							</div>
+						</div>
+				
+						
+						<form action="/user_panel" method="POST">
+							<input type="hidden" name="user" value="{{ user_name }}"/> <input type="hidden" name="password" value="{{ auth }}"/> <input type="hidden" name="path" value="{{ path }}/{{ file_name }}"/>
+							<button type="submit" class="open-folder-button">
+								<img class="file-img-button" src="{{ url_for('static',filename='icons/darrow.png') }}">
+							</button>
+						</form>
+					</div>
+		
+				</div>
+			{% endif %}
+			{% if not files[-1] == file_name %}
+				<hr>
+			{% endif %}
+		{% endfor %}
+	</section>
+
+
+
+
+
+	<script>
+        document.querySelectorAll('.imageForm').forEach((form, index) => {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const formData = new FormData(form);
+                const imgElement = document.querySelectorAll('.ShowImage')[index];
+
+                try {
+                    const response = await fetch('/get_image', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Errore nel recupero immagine');
+                    }
+
+                    const blob = await response.blob();
+                    const imageUrl = URL.createObjectURL(blob);
+                    imgElement.src = imageUrl;
+                    imgElement.style.display = 'block';
+                } catch (error) {
+                    console.error('Errore:', error.message);
+                    imgElement.style.display = 'none';
+                }
+            });
+        });
+    </script>
+	
+	
+
+	<script>
+		document.querySelectorAll(".delete-file-button").forEach((button, index) => {
+			button.addEventListener("click", function() {
+				document.querySelectorAll(".modal-delete")[index].style.display = "block";
+			});
+		});
+		
+		document.querySelectorAll(".close-delete").forEach((closeButton, index) => {
+			closeButton.addEventListener("click", function() {
+				document.querySelectorAll(".modal-delete")[index].style.display = "none";
+			});
+		});
+
+		document.querySelectorAll(".close-delete-button").forEach((closeButton, index) => {
+			closeButton.addEventListener("click", function() {
+				document.querySelectorAll(".modal-delete")[index].style.display = "none";
+			});
+		});
+		
+		window.addEventListener("click", function(event) {
+			document.querySelectorAll(".modal-delete").forEach(modal => {
+				if (event.target === modal) {
+					modal.style.display = "none";
+				}
+			});
+		});
+	</script>
+
+	<script>
+	        document.querySelectorAll(".rename-file-button").forEach((button, index) => {
+	            button.addEventListener("click", function() {
+	                document.querySelectorAll(".modal-rename")[index].style.display = "block";
+	            });
+	        });
+	        
+	        document.querySelectorAll(".close-rename").forEach((closeButton, index) => {
+	            closeButton.addEventListener("click", function() {
+	                document.querySelectorAll(".modal-rename")[index].style.display = "none";
+	            });
+	        });
+	        
+	        window.addEventListener("click", function(event) {
+	            document.querySelectorAll(".modal-rename").forEach(modal => {
+	                if (event.target === modal) {
+	                    modal.style.display = "none";
+	                }
+	            });
+	        });
+	</script>
+	
+</body>
+</html>

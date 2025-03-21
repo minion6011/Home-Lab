@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Os Command Response</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+	<link rel="icon" type="image/png" href="{{ url_for('static',filename='icons/icon.png') }}"/>
+</head>
+<body>
+    <header style="background-color: #0a7ee3;">
+        <h1>Command Response</h1>
+    </header>
+	<ul>
+		<li><a href="/index">Home</a></li>
+		<li><a href="/music">Musica</a></li>
+		<li><a href="/api_tool">Api Tool</a></li>
+		<li><a href="/film">Film Download</a></li>
+		<li><a href="/login">Cloud</a></li>
+	</ul>
+
+
+    <section class="os-card">
+        <h1>⚙️ Command Response 🔗</h1>
+        <code class="json_response">{{ command_response }}</code>
+	<a href="/index" class="home-button">Home</a>
+    </section>
+
+
+
+    </body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Film Search</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static',filename='icons/icon.png') }}"/>
+</head>
+<body>
+    <header style="background-color: #630297;">
+        <h1>Film Finder</h1>
+    </header>
+	<ul>
+		<li><a href="/index">Home</a></li>
+		<li><a href="/music">Musica</a></li>
+    		<li><a href="/api_tool">Api Tool</a></li>
+        	<li><a href="/film">Film Download</a></li>
+		<li><a href="/login">Cloud</a></li>
+	</ul>
+
+
+    <section class="card-film">
+        <h1>🎬 Film Search 🔎</h1> 
+        <form action="/film_iframe" method="post">
+            <div class="film-container">
+                <select style="width: 70%; padding: 10px; float:left;" name="film_id">
+                    {% for film in film_dict %}
+                    <option value="{{ film_dict[film] }}">{{ film }}</option>
+                    {% endfor %}
+                </select>
+                <button class="search-button" type="submit">
+			<img height="22px" width="22px" src="{{ url_for('static',filename='icons/search.png') }}">
+		</button>
+            </div>
+
+
+		</form>
+    </section>
+
+
+    </body>
+</html>

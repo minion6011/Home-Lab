@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Music Downloader</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+	<link rel="icon" type="image/png" href="{{ url_for('static',filename='icons/icon.png') }}"/>
+	<script defer src="{{ url_for('static', filename='script_music.js') }}"></script>
+</head>
+<body>
+	
+	<header style="background-color: #ce4257;">
+		<h1>Music Downloader</h1>
+	</header>
+	<ul>
+		<li><a href="/index">Home</a></li>
+		<li><a class="active" href="#music">Musica</a></li>
+		<li><a href="/api_tool">Api Tool</a></li>
+		<li><a href="/film">Film Download</a></li>
+		<li><a href="/login">Cloud</a></li>
+	  </ul>
+
+	
+	<section class="card-music">
+		<p style="font-size: 2rem; font-weight: 600;">🎵 Download a Song 🎵</p>
+		<form action="/process_song" method="post">
+			<textarea id="url" name="url" rows="1" cols="30" placeholder="https://..."></textarea>
+			<div style='margin-top:1px;'></div>
+			{{ status }}
+			<div style='margin-top:1px;'></div>
+			<button disabled class="download-button" type="submit">Download</button>
+		</form>
+		<p style="font-weight: 600;">🎶 Piattaforme supportate: Youtube 🎵</p>
+	</section>
+	<hr style="height: 1.5px; background: black;">
+	<h1 style="text-align: center;">🎵 Canzoni scaricate 🎶</h1>
+	<div class="card-player-container">
+		{% for song in song_dict %}
+		<section class="card-player">
+			<h2>{{ song }}</h2>
+			<div class="audio-container">
+				<div class="audio-player">
+					<audio class="audio" src="{{ url_for('static', filename=song_dict[song]) }}" type="audio/mpeg" preload="metadata"></audio>
+					<button class="play-pause audio-button">▶</button>
+					<span class="current-time">0:00</span> / <span class="duration">0:00</span>
+					<input type="range" class="progress-bar" value="0" min="0" step="1">
+					<button class="volume-toggle audio-button">🔊</button>
+					<input type="range" class="volume-bar" value="100" min="0" max="100">
+					<button class="loop-toggle audio-button">🔁</button>
+					<div class="menu-container">
+						<button class="more-options audio-button">⋮</button>
+						<div class="menu">
+							<button style="margin-right: 13px;" class="delete-song" data-url="/delete_song/{{ song }}">Elimina</button>
+							<a href="{{ url_for('static', filename=song_dict[song]) }}" style="font-size: 0.85rem">Song Link</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<br>
+		{% endfor %}
+	</div>
+
+
+	
+	<script>
+		function enableButton() {
+		  document.querySelector("button").disabled = false;
+		}
+	
+		document.querySelector("textarea").addEventListener("input", function() {
+		  const input = this.value;
+		  if (input.startsWith("https://")) {
+			enableButton();
+		  } else {
+			document.querySelector("button").disabled = true;
+		  }
+		});
+	  </script>
+
+
+</body>
+</html>

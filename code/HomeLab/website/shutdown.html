@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shutdown Sequence</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static',filename='icons/icon.png') }}"/>
+</head>
+<body>
+    <header style="background-color: #d62828;">
+        <h1>Shutdown Sequence</h1>
+    </header>
+
+    <section class="card-shutdown">
+        <h2 id="title">Riavvio dell'HomeLab<br>In corso...</h2>
+        <div class="timer" id="timer">Il dispositivo sarà riutilizzabile tra: 30</div>
+        <br>
+        <a href="/index" class="home-button">Home</a>
+    </section>
+
+
+
+
+    <script>
+        let countdown = 29;
+        const timerElement = document.getElementById('timer');
+        const titleElement = document.getElementById('title');
+
+        const interval = setInterval(() => {
+            timerElement.textContent = "Il dispositivo sarà riutilizzabile tra: " + countdown;
+            countdown--;
+
+            if (countdown < 0) {
+                clearInterval(interval);
+                timerElement.textContent = "🟢 Dispositivo pronto all'uso 🟢";
+                timerElement.style.fontSize = "1.5rem";
+                titleElement.style.display = "none";
+            }
+        }, 1000);
+    </script>
+
+
+
+    </body>
+</html>

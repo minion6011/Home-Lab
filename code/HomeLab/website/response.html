@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Api Response</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static',filename='icons/icon.png') }}"/>
+</head>
+<body>
+    <header style="background-color: #fdc600;">
+        <h1>API Tool</h1>
+    </header>
+	<ul>
+		<li><a href="/index">Home</a></li>
+		<li><a href="/music">Musica</a></li>
+		<li><a href="/api_tool">Api Tool</a></li>
+		<li><a href="/film">Film Download</a></li>
+		<li><a href="/login">Cloud</a></li>
+	</ul>
+
+
+    <section class="card-request">
+        <h1 style="font-size: 2.1rem; margin-top: 10px">📄 Request Response 🔗</h1> 
+
+        <h1 style="text-align: left; padding: 0px 30px;">Status Code: {{ status_code }}</h1>
+
+        <h1 style="text-align: left; padding: 0px 30px;">Json Response</h1>
+        <code class="json_response">{{ json_response }}</code>
+		<a href="/api_tool" class="request-button" type="submit">Home</a>
+    </section>
+
+
+    </body>
+</html>
