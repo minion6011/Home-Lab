@@ -1,0 +1,10 @@
+{
+  "Admin" : {
+    "password": "1234",
+    "path":"/path_admin"
+  },
+  "Guest" : {
+    "password": "guest",
+    "path":"/path_guest"
+  }
+}
