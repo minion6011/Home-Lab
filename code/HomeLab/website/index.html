@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pannello di controllo</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+	<link rel="icon" type="image/png" href="{{ url_for('static',filename='icons/icon.png') }}"/>
+</head>
+<body>
+    <header style="background-color: #4CAF50;">
+        <h1>Interfaccia HomeLab</h1>
+    </header>
+	<ul>
+		<li><a class="active" href="#index">Home</a></li>
+		<li><a href="/music">Musica</a></li>
+		<li><a href="/api_tool">Api Tool</a></li>
+		<li><a href="/film">Film Download</a></li>
+		<li><a href="/login">Cloud</a></li>
+	</ul>
+
+    <div class="monitor-container">
+        <div class="monitor-card">
+            <div class="value">{{ cpu_temp }}°</div>
+            <div class="label">CPU Temp</div>
+        </div>
+        <div class="monitor-card">
+            <div class="value">1.5GHz</div>
+            <div class="label">CPU Clock</div>
+        </div>
+        <div class="monitor-card">
+            <div class="value">{{ disk_usage }}%</div>
+            <div class="label">Disk Usage</div>
+        </div>
+        <div class="monitor-card">
+            <div class="value">{{ ram_usage }}%</div>
+            <div class="label">RAM Usage</div>
+        </div>
+    </div>
+
+    <section class="card-setting">
+        <h1>💻 Impostazioni 🛠️</h1>
+	<form action="/update">
+		<button type="submit" class="restart-button">Shutdown</button>
+	</form>
+    </section>
+
+    <section class="os-card">
+        <h1>⚙️ Send a Command 🔗</h1>
+        <form action="/execute_command" method="post">
+            <textarea name="command" class="os-textare" rows="1" cols="30" placeholder="sudo..."></textarea>
+	    <br>
+            <button type="submit" class="send-command-button">Send the command</button>
+        </form>
+    </section>
+    {% if esp32_int == "True" %}
+	    <section class="os-card" style="width: 400px; margin-top: 30px">
+	        <h1 style="font-size: 2rem; margin-bottom: 5px">Esp32 Module</h1>
+	        <iframe src="/esp32_get" height="150" width="350" style="border: 0px; margin: 10px; margin-top: 0px"></iframe>
+	    </section>
+    {% endif %}
+	
+    </body>
+</html>
