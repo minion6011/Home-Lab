@@ -11,6 +11,9 @@ Allows you to download music from YouTube and play it on the site
 - **Cloud** <br>
   Similar to Google Drive; it allows you to upload files, edit them, rename them and create folders
 
+> [!NOTE]
+> The site is in **Italian** with some terms in English.
+
 # Installation Guide
 <b>🍓 <a href="Guide_Raspbian.md">Raspbian</a> </b>
 <br>
