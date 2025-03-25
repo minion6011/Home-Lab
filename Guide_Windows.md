@@ -21,8 +21,9 @@ To use the HomeLab on Windows you need to follow these steps:
    - discord_webhook (The Discord Webhook to which the site's local IP will be sent)
    - ESP32_integration (Set as `"True"` if you are using the ESP32 integration otherwise set as `"False"`)
 
-6.  Set the `user.json` file in the `code/HomeLab` folder following the example in the file
-   
+6. Set the `user.json` file in the `code/HomeLab` folder following the example in the file
+
+7. Install Node.js from [here](https://nodejs.org/en/download)
 <hr>
 
 [Go back](README.md)
