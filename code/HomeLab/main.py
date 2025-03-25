@@ -16,7 +16,7 @@ import shutil
 img_ext = ('.png', '.jpg', '.jpeg', '.gif', '.bmp', '.tiff', '.webp', '.ico', '.gif')
 video_ext = ('.webm', '.mkv', '.vob', '.ogv', '.gifv', '.mng', '.mov', '.avi', '.amv', '.mp4', '.m4p', '.m4v', '.mpg', '.mp2', '.mpeg', '.mpe', '.mpv', '.m4v', '.svi')
 audio_ext = ('.mp3', '.flac', '.aac', '.ogg', '.wav')
-editor_ext = ('.txt', '.py', '.js', '.bat', ".json", ".css", ".xml")
+editor_ext = ('.txt', '.py', '.js', '.bat', ".json", ".css", ".xml", ".html")
 
 # - Code
 with open("app_config.json") as f:
