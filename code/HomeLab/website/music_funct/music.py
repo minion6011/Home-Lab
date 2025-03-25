@@ -9,4 +9,4 @@ def download_youtube(url):
 		url = url
 	yt = pytubefix.YouTube(url, on_progress_callback = on_progress, client="WEB")
 	file_name = f"{yt.title}.mp3"
-	yt.streams.first().download(filename=file_name, output_path="/home/coso/Desktop/HomeLab/website/music_funct")
+	yt.streams.first().download(filename=file_name)
