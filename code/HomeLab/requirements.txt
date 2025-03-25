@@ -3,4 +3,4 @@ flask
 pytubefix
 psutil
 gpiozero
-streamingcommunity-unofficialapi
+streamingcommunity-unofficialapi==2.0.4
