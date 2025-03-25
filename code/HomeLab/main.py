@@ -179,7 +179,7 @@ def editor_file():
 	path_folder = request.form['path']
 	if user in users_dict:
 		if password == users_dict[user]["password"]:
-			f = open(os.path.join(path_folder, file_name), "r")
+			f = open(os.path.join(path_folder, file_name), "r", encoding="utf-8")
 			code = conv_chr(f.read())
 			f.close
 			return render_template('editor.html', user_name=user, auth=users_dict[user]["password"], path=path_folder, filename=file_name, code_old=code)
