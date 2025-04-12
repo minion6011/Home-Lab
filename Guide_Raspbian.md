@@ -23,7 +23,7 @@ To use the HomeLab on Raspbian you need to follow these steps:
 
 6. Set the `user.json` file in the `code/HomeLab` folder following the example in the file
 
-7. Install Node.js from [here](https://nodejs.org/en/download)
+7. Install Node.js from [here](https://github.com/meech-ward/NodeJs-Raspberry-Pi)
 <hr>
 
 [Go back](README.md)
