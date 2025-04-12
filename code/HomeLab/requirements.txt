@@ -1,6 +1,6 @@
 requests
 flask
-pytubefix==8.11.0
+pytubefix
 psutil
 gpiozero
 streamingcommunity-unofficialapi==2.0.4
