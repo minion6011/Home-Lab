@@ -42,18 +42,19 @@ def handle_context():
 if data_config["ESP32_integration"] == "True":
 	# - Temperature
 	global data_temp
-	data_temp = {"temperature": "??", "humidity":"??"}
+	data_temp = {"temperature": "??", "humidity":"??", "time":"??"}
 	
 	@app.route('/esp32_data', methods=['POST'])
 	def esp32_data():
 		global data_temp
-		data_temp = request.get_json(force=True) 
+		data_temp = request.get_json(force=True)
+		data_temp["time"] = time.strftime('%H:%M')
 		return "Data accepted", 200
 	
 	@app.route("/esp32_get")
 	def esp32_get():
 		global data_temp
-		return f"<h1>🌡️ Temperatura: {data_temp['temperature']}°C<br>💧 Umidità: {data_temp['humidity']}%</h1>"
+		return f"<h1>🌡️ Temperatura: {data_temp['temperature']}°C<br>💧 Umidità: {data_temp['humidity']}%<br>🕐 Last Info: {data_temp['time']}</h1>"
 	# - Display LCD (x16)
 	@app.route("/esp32_display")
 	def esp32_display():
