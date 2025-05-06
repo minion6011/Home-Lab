@@ -4,20 +4,23 @@ from I2C_LCD import I2cLcd
 import urequests as requests
 import network
 import dht
+
+import gc 
 # - Mini Config
 
-GPIO_Pin = 2
+GPIO_Pin = 25
 
 Wifi_Data = [
-    {"SSID":"xxxx", "Password": "xxxx"}
+    {"SSID":"WINDTRE-749D25", "Password": "2dy7ma6rdskrtfh6"},
+    {"SSID":".", "Password": "Vittorio2"}
     ]
 
 
-temperature_url = "http://0.0.0.0/esp32_data"
-time_url = "http://0.0.0.0/esp32_display"
+temperature_url = "http://209.25.141.16:3164/esp32_data"
+time_url = "http://209.25.141.16:3164/esp32_display"
 # - Code
 
-i2c = I2C(scl=Pin(5), sda=Pin(4), freq=400000)
+i2c = I2C(scl=Pin(14), sda=Pin(13), freq=400000)
 sensor = dht.DHT11(Pin(GPIO_Pin))
 
 wlan = network.WLAN(network.WLAN.IF_STA)
@@ -71,9 +74,10 @@ else:
 
 lcd.backlight_on()
 lcd.move_to(0, 0)
-lcd.putstr("Booting...")
+lcd.putstr("Starting...")
 
 time.sleep(1)
+
 
 while True:
     data_dht = {"temperature": temp(), "humidity": humid()}
@@ -91,3 +95,4 @@ while True:
         do_connect()
     
     time.sleep(15)
+    gc.collect()
