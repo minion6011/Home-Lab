@@ -21,8 +21,8 @@ time_url = "http://209.25.141.16:3164/esp32_display"
 
 i2c = I2C(scl=Pin(14), sda=Pin(13), freq=400000)
 sensor = dht.DHT11(Pin(GPIO_Pin))
-
 wlan = network.WLAN(network.WLAN.IF_STA)
+wlan.active(True)
 
 def temp():
     sensor.measure()
@@ -36,20 +36,22 @@ def data_send(data_json: dict):
     try:
         r = requests.post(temperature_url, json=data_json)
         print(r.status_code)
+        r.close()
     except Exception as e:
         print("Request Error: 'data_send()'")
         print(e)
         
 def get_time():
     try:
-        r = requests.get(time_url).json()
-        return r["text"]
+        r = requests.get(time_url)
+        time_now = r.json()["text"]
+        r.close()
+        return time_now
     except Exception as e:
         print("Request Error: 'get_time()'")
         print(e)
 
 def do_connect():
-    wlan.active(True)
     if not wlan.isconnected():
         print('Connecting to network...')
         for data in Wifi_Data:
@@ -73,25 +75,28 @@ else:
 
 lcd.backlight_on()
 lcd.move_to(0, 0)
-lcd.putstr("Starting...")
+lcd.putstr("Booting...")
 
 time.sleep(1)
 
 
 while True:
-    data_dht = {"temperature": temp(), "humidity": humid()}
-    
-    lcd.move_to(0, 0)
-    lcd.putstr(f"Tem {data_dht['temperature']}C Umid {data_dht['humidity']}%")
-    if wlan.isconnected():
-        data_send(data_dht)
+    try:
+        data_dht = {"temperature": temp(), "humidity": humid()}
         
-        lcd.move_to(0, 1)
-        lcd.putstr(get_time())
-    else:
-        lcd.move_to(0, 1)
-        lcd.putstr("No Wi-fi")
-        do_connect()
+        lcd.move_to(0, 0)
+        lcd.putstr(f"Tem {data_dht['temperature']}C Umid {data_dht['humidity']}%")
+        if wlan.isconnected():
+            data_send(data_dht)
+            
+            lcd.move_to(0, 1)
+            lcd.putstr(get_time())
+        else:
+            lcd.move_to(0, 1)
+            lcd.putstr("No Wi-fi")
+            do_connect()
+    except Exception as e:
+        print(e)
     
     time.sleep(15)
     gc.collect()
