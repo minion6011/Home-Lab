@@ -15,8 +15,8 @@ Wifi_Data = [
     ]
 
 
-temperature_url = "http://209.25.141.16:3164/esp32_data"
-time_url = "http://209.25.141.16:3164/esp32_display"
+temperature_url = ""
+time_url = ""
 # - Code
 
 i2c = I2C(scl=Pin(14), sda=Pin(13), freq=400000)
@@ -83,18 +83,19 @@ time.sleep(1)
 while True:
     try:
         data_dht = {"temperature": temp(), "humidity": humid()}
-        
-        lcd.move_to(0, 0)
-        lcd.putstr(f"Tem {data_dht['temperature']}C Umid {data_dht['humidity']}%")
         if wlan.isconnected():
             data_send(data_dht)
-            
-            lcd.move_to(0, 1)
-            lcd.putstr(get_time())
+            under_line = get_time()
         else:
-            lcd.move_to(0, 1)
-            lcd.putstr("No Wi-fi")
+            under_line = "No Wi-fi"
             do_connect()
+
+        lcd.clear()
+        lcd.move_to(0, 0)
+        lcd.putstr(f"Tem {data_dht['temperature']}C Umid {data_dht['humidity']}%")
+        lcd.move_to(0, 1)
+        lcd.putstr(under_line)
+        
     except Exception as e:
         print(e)
     
